@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "d123f6a1-f493-4ae3-8ed3-bf34fd75b6ef",
+		"name": "Postman collection",
+		"description": "Makes four requests to HTTPBin (httpbin.org) and tests Newman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET with URL Params",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8e7da2b0-e4a6-4c8d-9313-dbed58642362",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(jsonData.args.isGood).to.eql('true');",
+							"    pm.expect(jsonData.args.isBad).to.eql('false');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/get?isGood=true&isBad=false",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"get"
+					],
+					"query": [
+						{
+							"key": "isGood",
+							"value": "true"
+						},
+						{
+							"key": "isBad",
+							"value": "false"
+						}
+					]
+				},
+				"description": "Simple GET request with URL Parameters"
+			},
+			"response": []
+		},
+		{
+			"name": "POST with JSON body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72888985-a814-4a75-9152-03c9ebaa77a8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e9507940-9e48-4b5c-a4d5-ef17a53b8a42",
+						"type": "text/javascript",
+						"exec": [
+							"let date = Date.now();",
+							"",
+							"pm.globals.set(\"currentDate\", date);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"john\",\n    \"permissions\": [2000,3000,4000]\n}"
+				},
+				"url": {
+					"raw": "http://httpbin.org/post",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT with form data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "df6b68c1-ec2e-4076-952b-df850c8a43a6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test form data\", function () {",
+							"    let data = pm.response.json();",
+							"    pm.expect(data.form.username).to.eql(\"johndoe\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "johndoe",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://httpbin.org/put",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"put"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ce1006ec-c021-47d9-b763-be8e843c4742",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://httpbin.org/delete",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "557cb8e7-dcf3-4e4e-8b0e-1dde851e3ec1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "56fdd6bd-8f73-4e40-9b3b-e91cc4d79a72",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
